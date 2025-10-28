@@ -4,7 +4,15 @@ const KEY = "TRAIL_COMPASS_PINS_V1";
 // TODO: Load the saved pins
 export async function loadPins() {
   try {
+    const data = await AsyncStorage.getItem(KEY);
+    if (data){
+      return JSON.parse(data)
+    }else{
+      return [];
+    }
+
   } catch {
+    console.error("Error loading pins:", error)
     return [];
   }
 }
@@ -12,5 +20,9 @@ export async function loadPins() {
 // TODO: Save the pins locally
 export async function savePins(pins) {
   try {
-  } catch {}
+    const data = JSON.stringify(pins);
+    await AsyncStorage.setItem(KEY, data);
+  } catch {
+    console.error("Error loading pins:", error)
+  }
 }
